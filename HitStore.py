@@ -12,6 +12,7 @@ class HitStore(object):
     self.article_list = []
     self.last_name = l_name
     self.first_name = f_name
+    self.populate()
 
   def get_total_hits(self):
     return self.total_hits
@@ -20,6 +21,9 @@ class HitStore(object):
     return self.article_list
 
   def populate(self):
+    """
+    Populates the HitStore data members for query by the server code 
+    """
     se = StorageEngine()
     parser = NewsParser(self.last_name, self.first_name)
     articles = se.get_collection('articles')

@@ -15,6 +15,18 @@ class NewsParser(object):
     # self.engine_list = [ machine for machine in engine ]
     self.last_name = l_name
     self.first_name = f_name
+    self.re_pattern = self.init_re_pattern()
+
+  def init_re_pattern(self):
+    """
+    Creates a regular expression pattern object from the given
+    first name and last names. Must be called after assigning first_name and
+    last_name members
+    Returns a pattern object
+    """
+    re_pattern = re.compile(r'(' + self.last_name + ')|(' + self.first_name +
+                            ')', flags=re.I)
+    return re_pattern
 
   def parse_doc(self, db_doc):
     """
@@ -44,7 +56,8 @@ class NewsParser(object):
     else:
       if 'title' not in article.keys() or 'body' not in article.keys():
         raise TypeError
-    pattern = re.compile(r'(Duterte)|(Rodrigo)', flags=re.I)
+    # pattern = re.compile(r'(Duterte)|(Rodrigo)(Duterte)', flags=re.I)
+    pattern = self.re_pattern
     title_split = article['title'].split()
     body_split = article['body'].split()
 
@@ -63,12 +76,16 @@ class NewsParser(object):
     """
     Parses the title for the name
     """
+    title_split = title.split()
+    for word in title_split:
+      pass  # TODO: parse title function
     return False
 
   def parse_body(self, body):
     return False
 
 if __name__ == '__main__':
+  # Testing NewsParser 
   parser = NewsParser('Rodrigo', 'Duterte')
   news_dict = {
     'title' : 'Duterte\'s comments about rape',
