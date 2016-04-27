@@ -24,11 +24,20 @@ class HitStore(object):
     """
     Populates the HitStore data members for query by the server code 
     """
-    se = StorageEngine()
+    se = StorageEngine('sqlite3')
     parser = NewsParser(self.last_name, self.first_name)
     articles = se.get_collection('articles')
-    for document in articles.find():
-      news = parser.parse_doc(document)
+    # for document in articles.find():
+    for document in articles:
+      # news = parser.parse_doc(document)
+      # if parser.is_article_hit(news):
+      news = {
+        'title' : document[0],
+        'author' : document[1],
+        'date' : document[2],
+        'body' : document[3],
+        'link' : document[4]
+      }
       if parser.is_article_hit(news):
         self.total_hits += 1
         self.article_list.append(news['link'])

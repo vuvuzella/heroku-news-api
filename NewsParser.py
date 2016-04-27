@@ -32,6 +32,11 @@ class NewsParser(object):
     """
     parses raw document data from mongodb
     """
+    # title = db_doc['article_title']
+    # author = db_doc['article_author']
+    # body = db_doc['article_body']
+    # link = db_doc['article_link']
+
     title = db_doc['article_title']
     author = db_doc['article_author']
     body = db_doc['article_body']
@@ -51,8 +56,7 @@ class NewsParser(object):
     """
     ret_val = False
     if type(article) is not dict:
-      raise TypeError
-      return ret_val
+      raise TypeError, type(article)
     else:
       if 'title' not in article.keys() or 'body' not in article.keys():
         raise TypeError
